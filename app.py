@@ -1,20 +1,38 @@
+books = []
+
 # FUNCTIONS
 
-def add_book(books, title, author):
+def add_book():
+    title = input('Type title of the book: ')
+    author = input('Type author of the book: ')
+
     books.append({
         'title': title,
         'author': author
     })
 
+    print('*** You have added new book to the store. ***') 
+    print(f'*** Title: "{title}", author: "{author}" ***')
 
-def remove_book(books, title, author):
-    return [
+
+def remove_book():
+    title = input('Type title of the book to remove: ')
+    author = input('Type author of the book to remove: ')
+
+    global books
+    books_size = len(books)
+    books = [
         book for book in books
         if not(book['title'] == title and book['author'] == author)
     ]
 
+    if books_size == len(books):
+        print('*** There is no such a book. Book has not been removed. ***')
+    else:
+        print('*** Book has been removed. ***')
 
-def print_all_books(books):
+
+def print_all_books():
     for book in books:
         print(f'Title: {book["title"]}, author: {book["author"]}')
     else:
@@ -29,29 +47,23 @@ def print_instructions():
     print('Press (q) - quits')
 
 
-def run_menu(books):
+menu_options = {
+    'a': add_book,
+    'r': remove_book,
+    'l': print_all_books
+}
+
+
+def run_menu():
     print('================== BOOKSTORE ===================')
     print('This is your bookstore program.')
     print_instructions()
-    input_op = input('Select option: ')
+    
+    input_op = input('\nSelect option: ')
     while input_op != 'q':
-        if input_op == 'a':
-            new_book_title = input('Type title of the book: ')
-            new_book_author = input('Type author of the book: ')
-            add_book(books, new_book_title, new_book_author)
-            print('*** You have added new book to the store. ***') 
-            print(f'*** Title: "{new_book_title}", author: "{new_book_author}" ***')
-        elif input_op == 'r':
-            book_to_remove_title = input('Type title of the book to remove: ')
-            book_to_remove_author = input('Type author of the book to remove: ')
-            books_size = len(books)
-            books = remove_book(books, book_to_remove_title, book_to_remove_author)
-            if books_size == len(books):
-                print('*** There is no such a book. Book has not been removed. ***')
-            else:
-                print('*** Book has been removed. ***')
-        elif input_op == 'l':
-            print_all_books()
+        if input_op in menu_options:
+            selected_operation = menu_options[input_op]
+            selected_operation()
         else:
             print('*** Unknown instruction. Select option from below. ***')
             print_instructions()
@@ -62,4 +74,4 @@ def run_menu(books):
 
 # PROGRAM
 
-run_menu([])
+run_menu()
