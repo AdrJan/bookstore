@@ -43,7 +43,7 @@ def print_instructions():
     print('Instructions: ')
     print('Press (l) - listing your books')
     print('Press (a) - add book to collection')
-    print('Press (r) - remove books from collection')
+    print('Press (r) - remove book from collection')
     print('Press (q) - quits')
 
 
