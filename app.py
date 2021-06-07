@@ -2,6 +2,17 @@ books = []
 
 # FUNCTIONS
 
+# UTIL FUNCTION
+
+def print_books(books):
+    for book in books:
+        print(f'Title: {book["title"]}, author: {book["author"]}')
+    else:
+        print(f'Totally: {len(books)} books.')
+
+
+# BOOKSTORE FUNCTIONS
+
 def add_book():
     title = input('Type title of the book: ')
     author = input('Type author of the book: ')
@@ -33,15 +44,24 @@ def remove_book():
 
 
 def print_all_books():
-    for book in books:
-        print(f'Title: {book["title"]}, author: {book["author"]}')
-    else:
-        print(f'Totally: {len(books)} books.')
+    print_books(books)
+
+
+def print_books_by_author():
+    author = input('Type author of the book: ')
+
+    filtered_books = [
+        book for book in books
+        if book['author'] == author
+    ]
+
+    print_books(filtered_books)
 
 
 def print_instructions():
     print('Instructions: ')
-    print('Press (l) - listing your books')
+    print('Press (l) - listing all books')
+    print('Press (la) - listing books by author')
     print('Press (a) - add book to collection')
     print('Press (r) - remove book from collection')
     print('Press (q) - quits')
@@ -50,7 +70,8 @@ def print_instructions():
 menu_options = {
     'a': add_book,
     'r': remove_book,
-    'l': print_all_books
+    'l': print_all_books,
+    'la': print_books_by_author
 }
 
 
