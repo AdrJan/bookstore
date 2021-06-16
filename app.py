@@ -1,77 +1,20 @@
-books = []
-
-# FUNCTIONS
-
-# UTIL FUNCTION
-
-def print_books(books):
-    for book in books:
-        print(f'Title: {book["title"]}, author: {book["author"]}')
-    else:
-        print(f'Totally: {len(books)} books.')
-
-
-# BOOKSTORE FUNCTIONS
-
-def add_book():
-    title = input('Type title of the book: ')
-    author = input('Type author of the book: ')
-
-    books.append({
-        'title': title,
-        'author': author
-    })
-
-    print('*** You have added new book to the store. ***') 
-    print(f'*** Title: "{title}", author: "{author}" ***')
-
-
-def remove_book():
-    title = input('Type title of the book to remove: ')
-    author = input('Type author of the book to remove: ')
-
-    global books
-    books_size = len(books)
-    books = [
-        book for book in books
-        if not(book['title'] == title and book['author'] == author)
-    ]
-
-    if books_size == len(books):
-        print('*** There is no such a book. Book has not been removed. ***')
-    else:
-        print('*** Book has been removed. ***')
-
-
-def print_all_books():
-    print_books(books)
-
-
-def print_books_by_author():
-    author = input('Type author of the book: ')
-
-    filtered_books = [
-        book for book in books
-        if book['author'] == author
-    ]
-
-    print_books(filtered_books)
+from utils import database
 
 
 def print_instructions():
-    print('Instructions: ')
-    print('Press (l) - listing all books')
-    print('Press (la) - listing books by author')
-    print('Press (a) - add book to collection')
-    print('Press (r) - remove book from collection')
-    print('Press (q) - quits')
+    """ Instructions: 
+    Press (l) - listing all books
+    Press (la) - listing books by author
+    Press (a) - add book to collection
+    Press (r) - remove book from collection
+    Press (q) - quits """
 
 
 menu_options = {
-    'a': add_book,
-    'r': remove_book,
-    'l': print_all_books,
-    'la': print_books_by_author
+    'a': database.add_book,
+    'r': database.remove_book,
+    'l': database.print_all_books,
+    'la': database.print_books_by_author
 }
 
 
@@ -79,7 +22,7 @@ def run_menu():
     print('================== BOOKSTORE ===================')
     print('This is your bookstore program.')
     print_instructions()
-    
+
     input_op = input('\nSelect option: ')
     while input_op != 'q':
         if input_op in menu_options:
