@@ -45,13 +45,13 @@ def print_books(books):
 
 
 def print_all_books():
-    print_books(database.get_books_from_file())
+    print_books(database.get_books())
 
 
 def print_books_by_author():
     author = input('Type author of the book: ')
 
-    books = database.get_books_from_file()
+    books = database.get_books()
 
     filtered_books = [
         book for book in books
@@ -81,6 +81,8 @@ menu_options = {
 
 
 def run():
+    database.create_database_table()
+
     print('================== BOOKSTORE ===================')
     print('This is your bookstore program.')
     print_instructions()
@@ -96,6 +98,7 @@ def run():
         input_op = input('\nSelect option: ')
     else:
         print('================================================')
+        database.save()
 
 
 # PROGRAM
