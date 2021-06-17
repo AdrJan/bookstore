@@ -30,7 +30,8 @@ def add_book():
 
     books.append({
         'title': title,
-        'author': author
+        'author': author,
+        'read': False
     })
 
     save_books_to_file(books)
@@ -57,6 +58,20 @@ def remove_book():
         print('*** There is no such a book. Book has not been removed. ***')
     else:
         print('*** Book has been removed. ***')
+
+
+def mark_book_as_read():
+    title = input('Type title of the book to mark as read: ')
+    author = input('Type author of the book to mark as read: ')
+
+    books = get_books_from_file()
+
+    for book in books:
+        if (book['title'] == title and book['author'] == author):
+            book['read'] = True
+            print(f'*** Book {book["title"]} has been marked as read. ***')
+
+    save_books_to_file(books)
 
 
 def print_all_books():

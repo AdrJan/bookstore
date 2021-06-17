@@ -2,19 +2,21 @@ from utils import database
 
 
 def print_instructions():
-    """ Instructions: 
+    print(""" Instructions: 
     Press (l) - listing all books
     Press (la) - listing books by author
     Press (a) - add book to collection
     Press (r) - remove book from collection
-    Press (q) - quits """
+    Press (mr) - mark book as read
+    Press (q) - quits """)
 
 
 menu_options = {
     'a': database.add_book,
     'r': database.remove_book,
     'l': database.print_all_books,
-    'la': database.print_books_by_author
+    'la': database.print_books_by_author,
+    'mr': database.mark_book_as_read
 }
 
 
