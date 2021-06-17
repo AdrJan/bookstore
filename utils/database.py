@@ -2,7 +2,7 @@ import json
 from json.decoder import JSONDecodeError
 
 
-FILE_NAME = 'books.txt'
+FILE_NAME = 'books.json'
 books = []
 
 
