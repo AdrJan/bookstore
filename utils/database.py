@@ -15,35 +15,28 @@ def get_books_from_file():
             return []
 
 
-def print_books(books):
-    for book in books:
-        print(f'Title: {book["title"]}, author: {book["author"]}')
-    else:
-        print(f'Totally: {len(books)} books.')
+def add_book(title, author):
+    """ Adds book to a collection.
 
-
-def add_book():
-    title = input('Type title of the book: ')
-    author = input('Type author of the book: ')
-
+    :param title: title of the book
+    :param author: author of the book
+    """
     books = get_books_from_file()
 
     books.append({
         'title': title,
         'author': author,
-        'read': False
+        'is_read': False
     })
 
     save_books_to_file(books)
 
-    print('*** You have added new book to the store. ***')
-    print(f'*** Title: "{title}", author: "{author}" ***')
 
+def remove_book(title, author):
+    """ Removes book from collection.
 
-def remove_book():
-    title = input('Type title of the book to remove: ')
-    author = input('Type author of the book to remove: ')
-
+    :return: True if succesfully removed.
+    """
     books = get_books_from_file()
 
     books_size = len(books)
@@ -54,38 +47,22 @@ def remove_book():
 
     save_books_to_file(books)
 
-    if books_size == len(books):
-        print('*** There is no such a book. Book has not been removed. ***')
-    else:
-        print('*** Book has been removed. ***')
+    return books_size != len(books)
 
 
-def mark_book_as_read():
-    title = input('Type title of the book to mark as read: ')
-    author = input('Type author of the book to mark as read: ')
+def mark_book_as_read(title, author):
+    """ Removes book from collection.
 
+    :return: True if succesfully marked book as read.
+    """
     books = get_books_from_file()
 
+    is_marked = False
     for book in books:
         if (book['title'] == title and book['author'] == author):
-            book['read'] = True
-            print(f'*** Book {book["title"]} has been marked as read. ***')
+            book['is_read'] = True
+            is_marked = True
 
     save_books_to_file(books)
 
-
-def print_all_books():
-    print_books(get_books_from_file())
-
-
-def print_books_by_author():
-    author = input('Type author of the book: ')
-
-    books = get_books_from_file()
-
-    filtered_books = [
-        book for book in books
-        if book['author'] == author
-    ]
-
-    print_books(filtered_books)
+    return is_marked
