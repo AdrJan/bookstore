@@ -1,5 +1,65 @@
 from utils import database
 
+# FUNCTIONS
+
+
+def add_book():
+    title = input('Type title of the book: ')
+    author = input('Type author of the book: ')
+
+    database.add_book(title, author)
+
+    print('*** You have added new book to the store. ***')
+    print(f'*** Title: "{title}", author: "{author}" ***')
+
+
+def remove_book():
+    title = input('Type title of the book to remove: ')
+    author = input('Type author of the book to remove: ')
+
+    if database.remove_book(title, author):
+        print('*** You have removed book from store. ***')
+        print(f'*** Title: "{title}", author: "{author}" ***')
+    else:
+        print("*** There is no such book to remove! ***")
+
+
+def mark_book_as_read():
+    title = input('Type title of the book to mark as read: ')
+    author = input('Type author of the book to mark as read: ')
+
+    if database.mark_book_as_read(title, author):
+        print('*** You have succesfully marked book as read. ***')
+        print(f'*** Title: {title}, author: {author} ***')
+    else:
+        print("*** There is no such book to mark! ***")
+
+
+def print_books(books):
+    for book in books:
+        is_read = 'YES' if book['is_read'] else 'NO'
+        print(
+            f'Title: {book["title"]}, author: {book["author"]}, marked as read: {is_read}')
+    else:
+        print(f'Totally: {len(books)} books.')
+
+
+def print_all_books():
+    print_books(database.get_books_from_file())
+
+
+def print_books_by_author():
+    author = input('Type author of the book: ')
+
+    books = database.get_books_from_file()
+
+    filtered_books = [
+        book for book in books
+        if book['author'] == author
+    ]
+
+    print_books(filtered_books)
+
 
 def print_instructions():
     print(""" Instructions: 
@@ -12,15 +72,15 @@ def print_instructions():
 
 
 menu_options = {
-    'a': database.add_book,
-    'r': database.remove_book,
-    'l': database.print_all_books,
-    'la': database.print_books_by_author,
-    'mr': database.mark_book_as_read
+    'a': add_book,
+    'r': remove_book,
+    'mr': mark_book_as_read,
+    'l': print_all_books,
+    'la': print_books_by_author
 }
 
 
-def run_menu():
+def run():
     print('================== BOOKSTORE ===================')
     print('This is your bookstore program.')
     print_instructions()
@@ -40,4 +100,4 @@ def run_menu():
 
 # PROGRAM
 
-run_menu()
+run()
