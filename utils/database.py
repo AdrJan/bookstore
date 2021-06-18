@@ -10,7 +10,7 @@ def create_database_table():
     connection = sqlite3.connect('data.db')
     cursor = connection.cursor()
 
-    cursor.execute('CREATE TABLE books(name text primary key, author text, is_read integer)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, is_read integer)')
 
     connection.commit()
     connection.close()
@@ -38,11 +38,13 @@ def add_book(title, author):
     :param title: title of the book
     :param author: author of the book
     """
-    books.append({
-        'title': title,
-        'author': author,
-        'is_read': False
-    })
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+
+    cursor.execute('INSERT INTO books VALUES(?, ?, 0)', (title, author))
+
+    connection.commit()
+    connection.close()
 
 
 def remove_book(title, author):
