@@ -1,4 +1,4 @@
-import json
+import sqlite3
 from json.decoder import JSONDecodeError
 
 
@@ -7,20 +7,25 @@ books = []
 
 
 def create_database_table():
-    global books
-    books = _get_books_from_file()
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
 
+    cursor.execute('CREATE TABLE books(name text primary key, author text, is_read integer)')
+
+    connection.commit()
+    connection.close()
 
 def save():
     with open(FILE_NAME, 'w') as f:
-        json.dump(books, f)
-
+        # json.dump(books, f)
+        pass
 
 def _get_books_from_file():
     try:
         with open(FILE_NAME, 'r') as f:
             try:
-                return json.load(f)
+                # return json.load(f)
+                pass
             except JSONDecodeError:
                 return []
     except FileNotFoundError:
