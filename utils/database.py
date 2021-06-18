@@ -1,35 +1,18 @@
 import sqlite3
-from json.decoder import JSONDecodeError
 
 
-FILE_NAME = 'books.json'
-books = []
+DATABASE_FILE = 'data.db'
 
 
 def create_database_table():
-    connection = sqlite3.connect('data.db')
+    connection = sqlite3.connect(DATABASE_FILE)
     cursor = connection.cursor()
 
-    cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, is_read integer)')
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS books(title text primary key, author text, is_read integer)')
 
     connection.commit()
     connection.close()
-
-def save():
-    with open(FILE_NAME, 'w') as f:
-        # json.dump(books, f)
-        pass
-
-def _get_books_from_file():
-    try:
-        with open(FILE_NAME, 'r') as f:
-            try:
-                # return json.load(f)
-                pass
-            except JSONDecodeError:
-                return []
-    except FileNotFoundError:
-        return []
 
 
 def add_book(title, author):
@@ -37,14 +20,19 @@ def add_book(title, author):
 
     :param title: title of the book
     :param author: author of the book
+    :return: True if succesfully added.
     """
-    connection = sqlite3.connect('data.db')
+    connection = sqlite3.connect(DATABASE_FILE)
     cursor = connection.cursor()
 
-    cursor.execute('INSERT INTO books VALUES(?, ?, 0)', (title, author))
-
-    connection.commit()
-    connection.close()
+    try:
+        cursor.execute('INSERT INTO books VALUES(?, ?, 0)', (title, author))
+        connection.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+    finally:
+        connection.close()
 
 
 def remove_book(title, author):
@@ -52,14 +40,15 @@ def remove_book(title, author):
 
     :return: True if succesfully removed.
     """
-    global books
-    books_size = len(books)
-    books = [
-        book for book in books
-        if not(book['title'] == title and book['author'] == author)
-    ]
+    connection = sqlite3.connect(DATABASE_FILE)
+    cursor = connection.cursor()
 
-    return books_size != len(books)
+    cursor.execute(
+        'DELETE FROM books WHERE title=? AND author =?', (title, author))
+
+    connection.commit()
+    connection.close()
+    return cursor.rowcount == 1
 
 
 def mark_book_as_read(title, author):
@@ -67,14 +56,22 @@ def mark_book_as_read(title, author):
 
     :return: True if succesfully marked book as read.
     """
-    is_marked = False
-    for book in books:
-        if (book['title'] == title and book['author'] == author):
-            book['is_read'] = True
-            is_marked = True
+    connection = sqlite3.connect(DATABASE_FILE)
+    cursor = connection.cursor()
 
-    return is_marked
+    cursor.execute(
+        'UPDATE books SET is_read=1 WHERE title=? AND author =?', (title, author))
+
+    connection.commit()
+    connection.close()
+    return cursor.rowcount == 1
 
 
 def get_books():
+    connection = sqlite3.connect(DATABASE_FILE)
+    cursor = connection.cursor()
+
+    books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
+             for row in cursor.fetchall()]
+
     return books

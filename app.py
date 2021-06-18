@@ -7,10 +7,11 @@ def add_book():
     title = input('Type title of the book: ')
     author = input('Type author of the book: ')
 
-    database.add_book(title, author)
-
-    print('*** You have added new book to the store. ***')
-    print(f'*** Title: "{title}", author: "{author}" ***')
+    if database.add_book(title, author):
+        print('*** You have added new book to the store. ***')
+        print(f'*** Title: "{title}", author: "{author}" ***')
+    else:
+        print('*** You cant add another book with same title ***')
 
 
 def remove_book():
@@ -98,7 +99,6 @@ def run():
         input_op = input('\nSelect option: ')
     else:
         print('================================================')
-        database.save()
 
 
 # PROGRAM
