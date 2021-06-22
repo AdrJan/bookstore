@@ -3,11 +3,11 @@ from sqlite3.dbapi2 import IntegrityError
 
 
 class DatabaseConnection:
-    def __init__(self, host):
+    def __init__(self, host: str):
         self.connection = None
         self.host = host
 
-    def __enter__(self):
+    def __enter__(self) -> sqlite3.Connection:
         self.connection = sqlite3.connect(self.host)
         return self.connection
 

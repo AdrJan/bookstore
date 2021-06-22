@@ -1,10 +1,11 @@
+from typing import Dict, List, Union
 from utils.db_connection import DatabaseConnection
 
 
 DATABASE_FILE = 'data.db'
 
 
-def create_database_table():
+def create_database_table() -> None:
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
@@ -12,7 +13,7 @@ def create_database_table():
             'CREATE TABLE IF NOT EXISTS books(title text primary key, author text, is_read integer)')
 
 
-def add_book(title, author):
+def add_book(title: str, author: str) -> bool:
     """ Adds book to a collection.
 
     :param title: title of the book
@@ -32,7 +33,7 @@ def add_book(title, author):
             return True
 
 
-def remove_book(title, author):
+def remove_book(title: str, author: str) -> bool:
     """ Removes book from collection.
 
     :return: True if succesfully removed.
@@ -46,7 +47,7 @@ def remove_book(title, author):
         return cursor.rowcount == 1
 
 
-def mark_book_as_read(title, author):
+def mark_book_as_read(title: str, author: str) -> bool:
     """ Removes book from collection.
 
     :return: True if succesfully marked book as read.
@@ -60,7 +61,7 @@ def mark_book_as_read(title, author):
         return cursor.rowcount == 1
 
 
-def get_books():
+def get_books() -> List[Dict[Union[str, int]]]:
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
