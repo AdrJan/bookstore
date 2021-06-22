@@ -1,18 +1,15 @@
-import sqlite3
+from utils.db_connection import DatabaseConnection
 
 
 DATABASE_FILE = 'data.db'
 
 
 def create_database_table():
-    connection = sqlite3.connect(DATABASE_FILE)
-    cursor = connection.cursor()
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
 
-    cursor.execute(
-        'CREATE TABLE IF NOT EXISTS books(title text primary key, author text, is_read integer)')
-
-    connection.commit()
-    connection.close()
+        cursor.execute(
+            'CREATE TABLE IF NOT EXISTS books(title text primary key, author text, is_read integer)')
 
 
 def add_book(title, author):
@@ -22,17 +19,17 @@ def add_book(title, author):
     :param author: author of the book
     :return: True if succesfully added.
     """
-    connection = sqlite3.connect(DATABASE_FILE)
-    cursor = connection.cursor()
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
 
-    try:
-        cursor.execute('INSERT INTO books VALUES(?, ?, 0)', (title, author))
-        connection.commit()
-        return True
-    except sqlite3.IntegrityError:
-        return False
-    finally:
-        connection.close()
+        cursor.execute(
+            'SELECT * FROM books WHERE title=? AND author=?', (title, author))
+        if (cursor.rowcount > 0):
+            return False
+        else:
+            cursor.execute('INSERT INTO books VALUES(?, ?, 0)',
+                           (title, author))
+            return True
 
 
 def remove_book(title, author):
@@ -40,15 +37,13 @@ def remove_book(title, author):
 
     :return: True if succesfully removed.
     """
-    connection = sqlite3.connect(DATABASE_FILE)
-    cursor = connection.cursor()
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
 
-    cursor.execute(
-        'DELETE FROM books WHERE title=? AND author =?', (title, author))
+        cursor.execute(
+            'DELETE FROM books WHERE title=? AND author =?', (title, author))
 
-    connection.commit()
-    connection.close()
-    return cursor.rowcount == 1
+        return cursor.rowcount == 1
 
 
 def mark_book_as_read(title, author):
@@ -56,22 +51,22 @@ def mark_book_as_read(title, author):
 
     :return: True if succesfully marked book as read.
     """
-    connection = sqlite3.connect(DATABASE_FILE)
-    cursor = connection.cursor()
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
 
-    cursor.execute(
-        'UPDATE books SET is_read=1 WHERE title=? AND author =?', (title, author))
+        cursor.execute(
+            'UPDATE books SET is_read=1 WHERE title=? AND author =?', (title, author))
 
-    connection.commit()
-    connection.close()
-    return cursor.rowcount == 1
+        return cursor.rowcount == 1
 
 
 def get_books():
-    connection = sqlite3.connect(DATABASE_FILE)
-    cursor = connection.cursor()
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
 
-    books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
-             for row in cursor.fetchall()]
+        cursor.execute('SELECT * FROM books')
 
-    return books
+        books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
+                 for row in cursor.fetchall()]
+
+        return books
