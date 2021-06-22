@@ -22,7 +22,14 @@ def add_book(title, author):
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO books VALUES(?, ?, 0)', (title, author))
+        cursor.execute(
+            'SELECT * FROM books WHERE title=? AND author=?', (title, author))
+        if (cursor.rowcount > 0):
+            return False
+        else:
+            cursor.execute('INSERT INTO books VALUES(?, ?, 0)',
+                           (title, author))
+            return True
 
 
 def remove_book(title, author):
@@ -49,7 +56,7 @@ def mark_book_as_read(title, author):
 
         cursor.execute(
             'UPDATE books SET is_read=1 WHERE title=? AND author =?', (title, author))
-            
+
         return cursor.rowcount == 1
 
 
@@ -57,7 +64,9 @@ def get_books():
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
+        cursor.execute('SELECT * FROM books')
+
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
-                for row in cursor.fetchall()]
+                 for row in cursor.fetchall()]
 
         return books
