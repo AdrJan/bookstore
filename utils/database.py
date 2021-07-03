@@ -61,7 +61,7 @@ def mark_book_as_read(title: str, author: str) -> bool:
         return cursor.rowcount == 1
 
 
-def get_books() -> List[Dict[Union[str, int]]]:
+def get_books() -> List[Dict[str, Union[str, int]]]:
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
