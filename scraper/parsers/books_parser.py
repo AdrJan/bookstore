@@ -1,4 +1,4 @@
-from scraper import locators
+import re
 from scraper.locators.book_locators import BookLocators
 
 
@@ -15,7 +15,7 @@ class BookParser:
         self.parent = parent
 
     def __repr__(self) -> str:
-        return f'<Book "{self.title}", price "{self.price}", rating {self.rating} stars. >'
+        return f'<Book "{self.title}", price "£{self.price} ", rating {self.rating} stars. >'
 
     @property
     def title(self) -> str:
@@ -25,7 +25,8 @@ class BookParser:
     @property
     def price(self) -> str:
         locator = BookLocators.PRICE
-        return self.parent.select_one(locator).string
+        priceStr = self.parent.select_one(locator).string
+        return re.search('[0-9]*\.[0-9]*', priceStr).group()
 
     @property
     def rating(self) -> str:
