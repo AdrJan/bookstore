@@ -67,8 +67,16 @@ def print_books_by_author():
 def get_books_from_web():
     page_content = requests.get('https://books.toscrape.com/').content
     page = BooksPage(page_content)
+    books = []
     for book in page.books:
+        books.append(book.get_object())
         print(book)
+    print('================================================')
+    print('Summary:\n')
+    print(f'Number of books: {len(books)}')
+    print(f'Total price: {sum(book["price"] for book in books)}')
+    print(
+        f'Average rating: {sum(book["rating"] for book in books) / len(books)}')
 
 
 def print_instructions():
