@@ -69,7 +69,7 @@ def get_books_from_web():
     page = BooksPage(page_content)
     books = []
     for book in page.books:
-        books.append(book.get_object())
+        books.append(book.get_properties())
         print(book)
     print('================================================')
     print('Summary:\n')

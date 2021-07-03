@@ -20,7 +20,7 @@ class BookParser:
     @property
     def title(self) -> str:
         locator = BookLocators.TITLE
-        return self.parent.select_one(locator).string
+        return self.parent.select_one(locator).attrs['title']
 
     @property
     def price(self) -> float:
@@ -36,5 +36,5 @@ class BookParser:
             in self.parent.select_one(locator).attrs['class']
         ][1]]
     
-    def get_object(self) -> dict:
+    def get_properties(self) -> dict:
         return {'title': self.title, 'price': self.price, 'rating': self.rating}
