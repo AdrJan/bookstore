@@ -3,6 +3,14 @@ from scraper.locators.book_locators import BookLocators
 
 
 class BookParser:
+    rating_mapper = {
+        'One': 1,
+        'Two': 2,
+        'Three': 3,
+        'Four': 4,
+        'Five': 5
+    }
+
     def __init__(self,  parent) -> None:
         self.parent = parent
 
@@ -22,7 +30,7 @@ class BookParser:
     @property
     def rating(self) -> str:
         locator = BookLocators.RATING
-        return [
+        return self.rating_mapper[[
             r for r
             in self.parent.select_one(locator).attrs['class']
-        ][1]
+        ][1]]
