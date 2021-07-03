@@ -23,10 +23,10 @@ class BookParser:
         return self.parent.select_one(locator).string
 
     @property
-    def price(self) -> str:
+    def price(self) -> float:
         locator = BookLocators.PRICE
         priceStr = self.parent.select_one(locator).string
-        return re.search('[0-9]*\.[0-9]*', priceStr).group()
+        return float(re.search('[0-9]*\.[0-9]*', priceStr).group())
 
     @property
     def rating(self) -> str:
@@ -35,3 +35,6 @@ class BookParser:
             r for r
             in self.parent.select_one(locator).attrs['class']
         ][1]]
+    
+    def get_object(self) -> dict:
+        return {'title': self.title, 'price': self.price, 'rating': self.rating}
