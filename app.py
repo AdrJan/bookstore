@@ -1,4 +1,6 @@
 from utils import database
+from scraper.pages.books_page import BooksPage
+import requests
 
 # FUNCTIONS
 
@@ -62,6 +64,13 @@ def print_books_by_author():
     print_books(filtered_books)
 
 
+def get_books_from_web():
+    page_content = requests.get('https://books.toscrape.com/').content
+    page = BooksPage(page_content)
+    for book in page.books:
+        print(book)
+
+
 def print_instructions():
     print(""" Instructions: 
     Press (l) - listing all books
@@ -69,6 +78,7 @@ def print_instructions():
     Press (a) - add book to collection
     Press (r) - remove book from collection
     Press (mr) - mark book as read
+    Press (d) - show books from web (https://books.toscrape.com/)
     Press (q) - quits """)
 
 
@@ -77,7 +87,8 @@ menu_options = {
     'r': remove_book,
     'mr': mark_book_as_read,
     'l': print_all_books,
-    'la': print_books_by_author
+    'la': print_books_by_author,
+    'd': get_books_from_web
 }
 
 

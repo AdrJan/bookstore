@@ -1,0 +1,2 @@
+class BooksPageLocators:
+    BOOK = 'article'
