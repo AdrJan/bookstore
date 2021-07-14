@@ -37,5 +37,3 @@ class BookParser:
             in self.parent.select_one(locator).attrs['class']
         ][1]]
     
-    def get_properties(self) -> dict:
-        return {'title': self.title, 'price': self.price, 'rating': self.rating}
