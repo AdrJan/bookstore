@@ -62,21 +62,34 @@ def print_books_by_author():
     ]
 
     print_books(filtered_books)
-
-
-def get_books_from_web():
-    page_content = requests.get('https://books.toscrape.com/').content
-    page = BooksPage(page_content)
+    
+# TODO: Add usage of get_pages_num
+# now regex is not working
+# value 51 (number of pages) is hardcoded
+def get_books_from_pages() -> None:
     books = []
-    for book in page.books:
-        books.append(book.get_properties())
+    for i in range(1, 51):
+        books.extend(get_books_from_page(f'https://books.toscrape.com/catalogue/page-{i}.html'))
+    books = sorted(books, key=lambda x: x.rating * -1)
+    for book in books:
         print(book)
+
     print('================================================')
     print('Summary:\n')
     print(f'Number of books: {len(books)}')
-    print(f'Total price: {sum(book["price"] for book in books)}')
-    print(
-        f'Average rating: {sum(book["rating"] for book in books) / len(books)}')
+    print(f'Average rating: {(sum(book.rating for book in books) / len(books)):.2f}')
+
+
+def get_books_from_page(url) -> list:
+    page_content = requests.get(url).content
+    page = BooksPage(page_content)
+    return page.books
+
+
+def get_pages_num() -> int:
+    page_content = requests.get('https://books.toscrape.com').content
+    page = BooksPage(page_content)
+    return page.pages_num
 
 
 def print_instructions():
@@ -96,7 +109,7 @@ menu_options = {
     'mr': mark_book_as_read,
     'l': print_all_books,
     'la': print_books_by_author,
-    'd': get_books_from_web
+    'd': get_books_from_pages
 }
 
 
