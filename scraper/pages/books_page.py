@@ -19,4 +19,4 @@ class BooksPage:
     def pages_num(self) -> int:
         locator = BooksPageLocators.PAGES_NUM
         pages_num_str = self.soup.select_one(locator).string
-        return int(re.findall('[0-9]*', pages_num_str)[-1])
+        return int(re.findall('([0-9]+)', pages_num_str)[-1])
