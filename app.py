@@ -63,12 +63,10 @@ def print_books_by_author():
 
     print_books(filtered_books)
     
-# TODO: Add usage of get_pages_num
-# now regex is not working
-# value 51 (number of pages) is hardcoded
+    
 def get_books_from_pages() -> None:
     books = []
-    for i in range(1, 51):
+    for i in range(1, get_pages_num()):
         books.extend(get_books_from_page(f'https://books.toscrape.com/catalogue/page-{i}.html'))
     books = sorted(books, key=lambda x: x.rating * -1)
     for book in books:
