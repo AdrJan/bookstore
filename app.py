@@ -1,6 +1,9 @@
+from types import MethodType
 from utils import database
 from scraper.pages.books_page import BooksPage
+from flask import Flask, render_template, request, url_for, redirect
 import requests
+
 
 # FUNCTIONS
 
@@ -110,27 +113,47 @@ menu_options = {
     'd': get_books_from_pages
 }
 
+# When program is running in terminal
 
-def run():
-    database.create_database_table()
+# def run():
+#     database.create_database_table()
 
-    print('================== BOOKSTORE ===================')
-    print('This is your bookstore program.')
-    print_instructions()
+#     print('================== BOOKSTORE ===================')
+#     print('This is your bookstore program.')
+#     print_instructions()
 
-    input_op = input('\nSelect option: ')
-    while input_op != 'q':
-        if input_op in menu_options:
-            selected_operation = menu_options[input_op]
-            selected_operation()
-        else:
-            print('*** Unknown instruction. Select option from below. ***')
-            print_instructions()
-        input_op = input('\nSelect option: ')
-    else:
-        print('================================================')
+#     input_op = input('\nSelect option: ')
+#     while input_op != 'q':
+#         if input_op in menu_options:
+#             selected_operation = menu_options[input_op]
+#             selected_operation()
+#         else:
+#             print('*** Unknown instruction. Select option from below. ***')
+#             print_instructions()
+#         input_op = input('\nSelect option: ')
+#     else:
+#         print('================================================')
+
+# When program is running as web page
+
+app = Flask(__name__)
 
 
-# PROGRAM
+@app.route('/books')
+def books():
+    return render_template('books.jinja2', books = database.get_books())
 
-run()
+@app.route('/add_book', methods=['POST', 'GET'])
+def add_book():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        author = request.form.get('author')
+        database.add_book(title, author)
+
+        return redirect(url_for('books'))
+
+    return render_template('add_book.jinja2', books = books)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    

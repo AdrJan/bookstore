@@ -1,0 +1,9 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <ul>
+    {% for book in books %}
+        <li> {{ book['title'] }} by {{ book['author'] }} </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

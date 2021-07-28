@@ -1,0 +1,59 @@
+#main-block {
+    width: 800px;
+
+    margin: auto;
+    padding: 20px;
+
+    border-style: solid;
+    color: black;
+    border-width: 1px;
+    border-radius: 10px;
+
+    background-color: rgb(197, 238, 197);
+
+    font-family: 'Trebuchet MS';
+}
+
+h1 {
+    font-weight: bold;
+    text-align: right;
+}
+
+#add-book {
+    overflow: hidden;
+
+    width: 300px;
+
+    padding: 20px;
+
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    background-color: lightgreen;
+}
+
+.add-book-inputs {
+    width: 200px;
+
+    float: left;
+}
+
+.button {
+    float: right;
+
+    padding: 20px;
+
+    border-radius: 8px;
+    
+    background-color: green;
+
+    font-size: 20px;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    margin: 0px 0px 30px 0px;
+}
