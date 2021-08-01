@@ -9,7 +9,8 @@
     border-width: 1px;
     border-radius: 10px;
 
-    background-color: rgb(197, 238, 197);
+    background-image: url("bookshelf.jpg");
+    background-position: right;
 
     font-family: 'Trebuchet MS';
 }
@@ -20,7 +21,7 @@ h1 {
 }
 
 #add-book {
-    overflow: hidden;
+    display: inline-block;
 
     width: 300px;
 
@@ -31,7 +32,43 @@ h1 {
     border-color: black;
     border-style: solid;
 
-    background-color: lightgreen;
+    background-color: lightgray;
+    opacity: 0.8;
+}
+
+#right-menu {
+    display: flexbox;
+
+    float: right;
+
+    width: 150px;
+
+    margin: auto;
+    padding: 20px;
+
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    background-color: lightgray;
+}
+
+#all-books {
+    display: inline-block;
+
+    padding: 20px;
+
+    width: 550px;
+
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    opacity: 0.85;
+
+    background-color: lightgray;
 }
 
 .add-book-inputs {
@@ -41,9 +78,11 @@ h1 {
 }
 
 .button {
-    float: right;
+    display: inline-block;
 
     padding: 20px;
+    margin-top: 13px;
+    margin-left: 30px;
 
     border-radius: 8px;
     
@@ -54,6 +93,67 @@ h1 {
     color: white;
 }
 
+.red {
+    background-color: red;
+}
+
 h2 {
     margin: 0px 0px 30px 0px;
+}
+
+a {
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+a:hover {
+    margin-left: 5px;
+}
+
+li.single-book {
+    float: left;
+
+    width: 350px;
+    margin: 10px;
+    padding: 5px;
+
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    list-style-type: none;
+
+    opacity: 1;
+}
+
+.is-read {
+    background-color: lightgreen;
+}
+
+.is-not-read {
+    background-color: red;
+}
+
+#book-row {
+    overflow: hidden;
+}
+
+#is-read-label {
+    text-align: center;
+
+    width: 70px;
+    
+    padding: 0px 0px 0px 2px;
+    margin-right: 4px;
+
+    font-style: italic;
+
+    float: right;
+}
+
+ul {
+    padding: 0;
 }

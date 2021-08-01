@@ -1,4 +1,3 @@
-from types import MethodType
 from utils import database
 from scraper.pages.books_page import BooksPage
 from flask import Flask, render_template, request, url_for, redirect
@@ -28,17 +27,6 @@ def remove_book():
         print(f'*** Title: "{title}", author: "{author}" ***')
     else:
         print("*** There is no such book to remove! ***")
-
-
-def mark_book_as_read():
-    title = input('Type title of the book to mark as read: ')
-    author = input('Type author of the book to mark as read: ')
-
-    if database.mark_book_as_read(title, author):
-        print('*** You have succesfully marked book as read. ***')
-        print(f'*** Title: {title}, author: {author} ***')
-    else:
-        print("*** There is no such book to mark! ***")
 
 
 def print_books(books):
@@ -104,15 +92,6 @@ def print_instructions():
     Press (q) - quits """)
 
 
-menu_options = {
-    'a': add_book,
-    'r': remove_book,
-    'mr': mark_book_as_read,
-    'l': print_all_books,
-    'la': print_books_by_author,
-    'd': get_books_from_pages
-}
-
 # When program is running in terminal
 
 # def run():
@@ -139,9 +118,21 @@ menu_options = {
 app = Flask(__name__)
 
 
-@app.route('/books')
+@app.route('/books', methods=['POST', 'GET'])
 def books():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        author = request.form.get('author')
+        if request.form['button_submit'] == 'delete':
+            database.remove_book(title, author)
+        elif request.form['button_submit'] == 'update':
+            database.toggle_read(title, author)
+
+
+        return redirect(url_for('books'))
+        
     return render_template('books.jinja2', books = database.get_books())
+
 
 @app.route('/add_book', methods=['POST', 'GET'])
 def add_book():
@@ -154,6 +145,6 @@ def add_book():
 
     return render_template('add_book.jinja2', books = books)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-    

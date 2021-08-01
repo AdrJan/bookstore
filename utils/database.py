@@ -47,7 +47,7 @@ def remove_book(title: str, author: str) -> bool:
         return cursor.rowcount == 1
 
 
-def mark_book_as_read(title: str, author: str) -> bool:
+def toggle_read(title: str, author: str) -> bool:
     """ Removes book from collection.
 
     :return: True if succesfully marked book as read.
@@ -55,8 +55,14 @@ def mark_book_as_read(title: str, author: str) -> bool:
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
+        cursor.execute('SELECT is_read FROM books WHERE title=? AND author=?', (title, author))
+
+        # temp = cursor.fetchone()[0]
+
+        is_read = 0 if cursor.fetchone()[0] else 1
+
         cursor.execute(
-            'UPDATE books SET is_read=1 WHERE title=? AND author =?', (title, author))
+            'UPDATE books SET is_read=? WHERE title=? AND author=?', (is_read, title, author))
 
         return cursor.rowcount == 1
 
