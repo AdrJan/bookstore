@@ -23,7 +23,7 @@ h1 {
 #add-book {
     display: inline-block;
 
-    width: 300px;
+    width: 350px;
 
     padding: 20px;
 
@@ -72,9 +72,18 @@ h1 {
 }
 
 .add-book-inputs {
-    width: 200px;
+    width: 230px;
 
     float: left;
+}
+
+.add-book-input {
+    height: 20px;
+    width: 230px;
+
+    margin-top: 5px;
+
+    border-radius: 8px;
 }
 
 .button {
