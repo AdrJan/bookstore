@@ -166,3 +166,7 @@ li.single-book {
 ul {
     padding: 0;
 }
+
+a.pagination:hover {
+    margin: 0;
+}

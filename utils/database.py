@@ -77,3 +77,15 @@ def get_books() -> List[Dict[str, Union[str, int]]]:
                  for row in cursor.fetchall()]
 
         return books
+
+
+def get_sliced_books(offset, limit) -> List[Dict[str, Union[str, int]]]:
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM books LIMIT ? OFFSET ?', (limit, offset))
+
+        books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
+                 for row in cursor.fetchall()]
+
+        return books
