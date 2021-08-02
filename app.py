@@ -1,6 +1,6 @@
 from utils import database
 from scraper.pages.books_page import BooksPage
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, abort
 import requests
 
 
@@ -32,8 +32,18 @@ def get_pages_num() -> int:
 app = Flask(__name__)
 
 
-@app.route('/books', methods=['POST', 'GET'])
-def books():
+@app.route('/books/<page_num>', methods=['POST', 'GET'])
+def books(page_num):
+    BOOKS_PER_PAGE = 1
+    page_num = int(page_num)
+    offset = page_num * BOOKS_PER_PAGE
+
+    last_page = len(database.get_books()) // BOOKS_PER_PAGE
+    books = database.get_sliced_books(offset, BOOKS_PER_PAGE)
+
+    if len(books) == 0:
+        abort(404)
+
     if request.method == 'POST':
         title = request.form.get('title')
         author = request.form.get('author')
@@ -42,10 +52,9 @@ def books():
         elif request.form['button_submit'] == 'update':
             database.toggle_read(title, author)
 
-
-        return redirect(url_for('books'))
+        return redirect(url_for('/books/'))
         
-    return render_template('books.jinja2', books = database.get_books())
+    return render_template('books.jinja2', books = books, page_num = page_num, last_page = last_page)
 
 
 @app.route('/add_book', methods=['POST', 'GET'])
