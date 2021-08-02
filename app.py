@@ -61,7 +61,7 @@ def add_book():
 
         return redirect(url_for('books'))
 
-    return render_template('add_book.jinja2', books = books)
+    return render_template('add_book.jinja2')
 
 
 if __name__ == '__main__':
