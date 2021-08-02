@@ -9,8 +9,10 @@ import requests
     
 def get_books_from_pages() -> None:
     books = []
-    for i in range(1, get_pages_num()):
-        books.extend(get_books_from_page(f'https://books.toscrape.com/catalogue/page-{i}.html'))
+    urls = []
+    for i in range(1, get_pages_num() + 1):
+        urls.append(f'https://books.toscrape.com/catalogue/page-{i}.html')
+    books = async_scraping.get_books(*urls)
     books = sorted(books, key=lambda x: x.rating * -1)
     for book in books:
         print(book)
@@ -19,12 +21,6 @@ def get_books_from_pages() -> None:
     print('Summary:\n')
     print(f'Number of books: {len(books)}')
     print(f'Average rating: {(sum(book.rating for book in books) / len(books)):.2f}')
-
-
-def get_books_from_page(url) -> list:
-    page_content = requests.get(url).content
-    page = BooksPage(page_content)
-    return page.books
 
 
 def get_pages_num() -> int:
