@@ -1,0 +1,33 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+    <div id='all-books'>
+        <ul>
+        <h2>All books</h2>
+        <hr>
+        {% if books|length > 0 %}
+        <div id='book-row'>
+            <label id="is-read-label">Remove</label>
+            <label id="is-read-label">Mark as read</label>
+        </div>
+        {% else %}
+            There are no books, add one!
+        {% endif %}
+        {% for book in books %}
+        <div id='book-row'>
+        {% if book['is_read'] == True %}
+            <li class='single-book is-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
+        {% else %}
+            <li class='single-book is-not-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
+        {% endif %}
+            <form method="POST">
+                <input type="hidden" name="title" value="{{ book['title'] }}">
+                <input type="hidden" name="author" value="{{ book['author'] }}">
+                <button type="submit" name='button_submit' class='button' value='update'>
+                <button type="submit" name='button_submit' class='button red' value='delete'>
+            </form>
+        </div>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
