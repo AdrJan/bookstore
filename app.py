@@ -1,10 +1,12 @@
 from utils import database
 from scraper.pages.books_page import BooksPage
-from flask import Flask, render_template, request, url_for, redirect, abort
+from flask import Flask, render_template, request, url_for, redirect
+from configparser import ConfigParser
 import requests
 
 
-# FUNCTIONS
+config = ConfigParser()
+config.read('configuration/config.ini')
     
     
 def get_books_from_pages() -> None:
@@ -34,7 +36,7 @@ app = Flask(__name__)
 
 @app.route('/books/<page_num>', methods=['POST', 'GET'])
 def books(page_num):
-    BOOKS_PER_PAGE = 2
+    BOOKS_PER_PAGE = int(config.get('pages', 'BOOKS_PER_PAGE'))
     page_num = int(page_num)
     offset = page_num * BOOKS_PER_PAGE
 
