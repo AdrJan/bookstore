@@ -23,8 +23,8 @@
             <form method="POST">
                 <input type="hidden" name="title" value="{{ book['title'] }}">
                 <input type="hidden" name="author" value="{{ book['author'] }}">
-                <button type="submit" name='button_submit' class='button' value='update'>
-                <button type="submit" name='button_submit' class='button red' value='delete'>
+                <button type="submit" name='button_submit' class='button check-mark' value='update'>
+                <button type="submit" name='button_submit' class='button red cross' value='delete'>
             </form>
         </div>
         {% endfor %}
