@@ -193,3 +193,17 @@ a.right-float {
     font-size: 20px;
     color: white;
 }
+
+.check-mark {
+    background-image: url('check-mark.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 32px;
+}
+
+.cross {
+    background-image: url('cross.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: 32px;
+}
