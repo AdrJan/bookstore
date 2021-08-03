@@ -10,14 +10,6 @@ _Application for keeping info about your books._
 
 * User can find a book using book title, or author.
 
-## Implementation tasks
+## Configuration
 
-* Decide where to store books in code.
-Books will be stored in a list.
-
-* Decide what data for a book we want to store.
-Book will contain info about title and author.
-
-* Show User a menu and let him choose option.
-
-* Stop running the program with q.
+* Number of displayed books on a page is kept in configuration file.
