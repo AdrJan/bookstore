@@ -29,11 +29,11 @@
         </div>
         {% endfor %}
         </ul>
-        {% if page_num != 0 %}
-            <a class='pagination' href='/books/{{page_num - 1}}'>previous</a>
+        {% if page_num > 0 %}
+            <a class='pagination left-float' href='/books/{{page_num - 1}}'>previous</a>
         {% endif %}
-        {% if page_num != last_page %}
-            <a class='pagination' href='/books/{{page_num + 1}}'>next</a>
+        {% if page_num < last_page %}
+            <a class='pagination right-float' href='/books/{{page_num + 1}}'>next</a>
         {% endif %}
     </div>
 {% endblock %}
