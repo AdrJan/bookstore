@@ -10,12 +10,15 @@
     border-radius: 10px;
 
     background-image: url("bookshelf.jpg");
+    background-size: 900px;
     background-position: right;
 
     font-family: 'Trebuchet MS';
 }
 
 h1 {
+    color: white;
+
     font-weight: bold;
     text-align: right;
 }
@@ -69,6 +72,11 @@ h1 {
     opacity: 0.85;
 
     background-color: lightgray;
+}
+
+#footer {
+    overflow: hidden;
+    width: 780px;
 }
 
 .add-book-inputs {
@@ -177,4 +185,11 @@ a.left-float {
 
 a.right-float {
     float: right;
+}
+
+.footer-link {
+    float: right;
+
+    font-size: 20px;
+    color: white;
 }
