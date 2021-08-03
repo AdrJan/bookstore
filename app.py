@@ -34,25 +34,24 @@ app = Flask(__name__)
 
 @app.route('/books/<page_num>', methods=['POST', 'GET'])
 def books(page_num):
-    BOOKS_PER_PAGE = 1
+    BOOKS_PER_PAGE = 2
     page_num = int(page_num)
     offset = page_num * BOOKS_PER_PAGE
 
-    last_page = len(database.get_books()) // BOOKS_PER_PAGE
+    last_page = len(database.get_books()) / BOOKS_PER_PAGE - 1
     books = database.get_sliced_books(offset, BOOKS_PER_PAGE)
-
-    if len(books) == 0:
-        abort(404)
 
     if request.method == 'POST':
         title = request.form.get('title')
         author = request.form.get('author')
         if request.form['button_submit'] == 'delete':
+            page_num = page_num if len(books) != 1 else page_num - 1
+            page_num = 0 if page_num < 0 else page_num
             database.remove_book(title, author)
         elif request.form['button_submit'] == 'update':
             database.toggle_read(title, author)
-
-        return redirect(url_for('/books/'))
+        
+        return redirect(url_for('books', page_num=page_num))
         
     return render_template('books.jinja2', books = books, page_num = page_num, last_page = last_page)
 
@@ -64,7 +63,7 @@ def add_book():
         author = request.form.get('author')
         database.add_book(title, author)
 
-        return redirect(url_for('books'))
+        return redirect(url_for('books', page_num = 0))
 
     return render_template('add_book.jinja2')
 

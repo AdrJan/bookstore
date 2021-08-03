@@ -170,3 +170,11 @@ ul {
 a.pagination:hover {
     margin: 0;
 }
+
+a.left-float {
+    float: left;
+}
+
+a.right-float {
+    float: right;
+}
