@@ -70,5 +70,16 @@ def add_book():
     return render_template('add_book.jinja2')
 
 
+@app.route('/search_book', methods=['POST', 'GET'])
+def search_book():
+    books = []
+    if request.method == 'POST':
+        title = request.form.get('title')
+        author = request.form.get('author')
+        books = database.get_filtered_books(title, author)
+
+    return render_template('search_book.jinja2', books = books)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

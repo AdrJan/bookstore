@@ -1,4 +1,6 @@
 #main-block {
+    overflow: hidden;
+
     width: 800px;
 
     margin: auto;
@@ -24,11 +26,27 @@ h1 {
 }
 
 #add-book {
-    display: inline-block;
+    float: right;
 
-    width: 350px;
+    width: 540px;
 
     padding: 20px;
+    margin: 5px;
+
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+
+    background-color: lightgray;
+    opacity: 0.8;
+}
+
+#search-book {
+    float: right;
+
+    padding: 20px;
+    margin: 5px;
 
     border-radius: 8px;
     border-width: 2px;
@@ -40,13 +58,10 @@ h1 {
 }
 
 #right-menu {
-    display: flexbox;
-
-    float: right;
-
+    float: left;
     width: 150px;
 
-    margin: auto;
+    margin: 5px;
     padding: 20px;
 
     border-radius: 8px;
@@ -57,12 +72,13 @@ h1 {
     background-color: lightgray;
 }
 
-#all-books {
-    display: inline-block;
+#section-books {
+    float: right;
 
     padding: 20px;
+    margin: 5px;
 
-    width: 550px;
+    width: 540px;
 
     border-radius: 8px;
     border-width: 2px;
@@ -80,18 +96,36 @@ h1 {
 }
 
 .add-book-inputs {
-    width: 230px;
+    width: 400px;
 
     float: left;
 }
 
 .add-book-input {
     height: 20px;
-    width: 230px;
+    width: 400px;
 
     margin-top: 5px;
 
     border-radius: 8px;
+}
+
+.button-big {
+    display: inline-block;
+
+    padding: 20px;
+    margin-top: 13px;
+    margin-left: 30px;
+    width: 110px;
+    height: 90px;
+
+    border-radius: 8px;
+    
+    background-color: green;
+
+    font-size: 20px;
+    text-align: center;
+    color: white;
 }
 
 .button {

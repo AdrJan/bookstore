@@ -47,6 +47,18 @@ def remove_book(title: str, author: str) -> bool:
         return cursor.rowcount == 1
 
 
+def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int]]]:
+    with DatabaseConnection(DATABASE_FILE) as connection:
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT * FROM books WHERE title LIKE ? AND author LIKE ?", ('%'+title+'%', '%'+author+'%'))
+
+        books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
+                 for row in cursor.fetchall()]
+
+        return books
+
+
 def toggle_read(title: str, author: str) -> bool:
     """ Removes book from collection.
 
