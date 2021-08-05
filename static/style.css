@@ -1,6 +1,7 @@
 #main-block {
     overflow: hidden;
     width: 800px;
+    max-height: 700px;
     margin: auto;
     padding: 20px;
     border-style: solid;
@@ -8,7 +9,7 @@
     border-width: 1px;
     border-radius: 10px;
     background-image: url("bookshelf.jpg");
-    background-size: 900px;
+    background-size: 1100px;
     background-position: right;
     font-family: 'Trebuchet MS';
 }
