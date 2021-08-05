@@ -51,7 +51,8 @@ def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM books WHERE title LIKE ? AND author LIKE ?", ('%'+title+'%', '%'+author+'%'))
+        cursor.execute("SELECT * FROM books WHERE title LIKE ? AND author LIKE ?",
+                       ('%'+title+'%', '%'+author+'%'))
 
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
@@ -67,7 +68,8 @@ def toggle_read(title: str, author: str) -> bool:
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT is_read FROM books WHERE title=? AND author=?', (title, author))
+        cursor.execute(
+            'SELECT is_read FROM books WHERE title=? AND author=?', (title, author))
 
         # temp = cursor.fetchone()[0]
 
