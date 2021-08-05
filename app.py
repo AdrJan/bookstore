@@ -7,8 +7,8 @@ import requests
 
 config = ConfigParser()
 config.read('configuration/config.ini')
-    
-    
+
+
 def get_books_from_pages() -> None:
     books = []
     urls = []
@@ -22,7 +22,8 @@ def get_books_from_pages() -> None:
     print('================================================')
     print('Summary:\n')
     print(f'Number of books: {len(books)}')
-    print(f'Average rating: {(sum(book.rating for book in books) / len(books)):.2f}')
+    print(
+        f'Average rating: {(sum(book.rating for book in books) / len(books)):.2f}')
 
 
 def get_pages_num() -> int:
@@ -52,10 +53,10 @@ def books(page_num):
             database.remove_book(title, author)
         elif request.form['button_submit'] == 'update':
             database.toggle_read(title, author)
-        
+
         return redirect(url_for('books', page_num=page_num))
-        
-    return render_template('books.jinja2', books = books, page_num = page_num, last_page = last_page)
+
+    return render_template('books.jinja2', books=books, page_num=page_num, last_page=last_page)
 
 
 @app.route('/add_book', methods=['POST', 'GET'])
@@ -65,7 +66,7 @@ def add_book():
         author = request.form.get('author')
         database.add_book(title, author)
 
-        return redirect(url_for('books', page_num = 0))
+        return redirect(url_for('books', page_num=0))
 
     return render_template('add_book.jinja2')
 
@@ -85,7 +86,7 @@ def search_book():
         else:
             books = database.get_filtered_books(title, author)
 
-    return render_template('search_book.jinja2', books = books)
+    return render_template('search_book.jinja2', books=books)
 
 
 if __name__ == '__main__':
