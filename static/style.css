@@ -1,7 +1,17 @@
+#header {
+    height: 100px;
+    width: 800px;
+}
+
+img#logo {
+    float: left;
+    width: 300px;
+}
+
 #main-block {
     overflow: hidden;
     width: 800px;
-    max-height: 700px;
+    max-height: 600px;
     margin: auto;
     padding: 20px;
     border-style: solid;
@@ -9,7 +19,7 @@
     border-width: 1px;
     border-radius: 10px;
     background-image: url("bookshelf.jpg");
-    background-size: 1100px;
+    background-size: 1000px;
     background-position: right;
     font-family: 'Trebuchet MS';
 }
