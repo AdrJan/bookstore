@@ -28,10 +28,10 @@ def books(page_num):
             database.remove_book(title, author)
         elif request.form['button_submit'] == 'update':
             database.toggle_read(title, author)
-        
+
         return redirect(url_for('books', page_num=page_num))
-        
-    return render_template('books.jinja2', books = books, page_num = page_num, last_page = last_page)
+
+    return render_template('books.jinja2', books=books, page_num=page_num, last_page=last_page)
 
 
 @app.route('/add_book', methods=['POST', 'GET'])
@@ -41,7 +41,7 @@ def add_book():
         author = request.form.get('author')
         database.add_book(title, author)
 
-        return redirect(url_for('books', page_num = 0))
+        return redirect(url_for('books', page_num=0))
 
     return render_template('add_book.jinja2')
 
@@ -52,9 +52,16 @@ def search_book():
     if request.method == 'POST':
         title = request.form.get('title')
         author = request.form.get('author')
-        books = database.get_filtered_books(title, author)
+        
+        # TODO fix, search is blank after mark/delete
+        if request.form['button_submit'] == 'delete':
+            database.remove_book(title, author)
+        elif request.form['button_submit'] == 'update':
+            database.toggle_read(title, author)
+        else:
+            books = database.get_filtered_books(title, author)
 
-    return render_template('search_book.jinja2', books = books)
+    return render_template('search_book.jinja2', books=books)
 
 
 if __name__ == '__main__':
