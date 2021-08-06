@@ -1,35 +1,10 @@
 from utils import database
-from scraper.pages.books_page import BooksPage
 from flask import Flask, render_template, request, url_for, redirect
 from configparser import ConfigParser
-import requests
 
 
 config = ConfigParser()
 config.read('configuration/config.ini')
-
-
-def get_books_from_pages() -> None:
-    books = []
-    urls = []
-    for i in range(1, get_pages_num() + 1):
-        urls.append(f'https://books.toscrape.com/catalogue/page-{i}.html')
-    books = async_scraping.get_books(*urls)
-    books = sorted(books, key=lambda x: x.rating * -1)
-    for book in books:
-        print(book)
-
-    print('================================================')
-    print('Summary:\n')
-    print(f'Number of books: {len(books)}')
-    print(
-        f'Average rating: {(sum(book.rating for book in books) / len(books)):.2f}')
-
-
-def get_pages_num() -> int:
-    page_content = requests.get('https://books.toscrape.com').content
-    page = BooksPage(page_content)
-    return page.pages_num
 
 
 app = Flask(__name__)
