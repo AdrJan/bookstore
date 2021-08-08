@@ -2,22 +2,26 @@
 
 {% block content %}
     <div id="section-books">
-        <h2>Books</h2>
-        {% for book in books %}
-        <div id='book-row'>
-        {% if book['is_read'] == True %}
-            <li class='single-book is-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
-        {% else %}
-            <li class='single-book is-not-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
-        {% endif %}
-            <form method="POST">
-                <input type="hidden" name="title" value="{{ book['title'] }}">
-                <input type="hidden" name="author" value="{{ book['author'] }}">
-                <button type="submit" name='button_submit' class='button check-mark' value='update'>
-                <button type="submit" name='button_submit' class='button red cross' value='delete'>
-            </form>
+        <div id="header-search"><h2>Books</h2></div>
+        <div id="header-search-blank"></div>
+        <hr>
+        <div id="section-books-ul">
+            {% for book in books %}
+            <div id='book-row'>
+            {% if book['is_read'] == True %}
+                <li class='single-book is-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
+            {% else %}
+                <li class='single-book is-not-read'> {{ book['title'] }} <br/> by {{ book['author'] }} </li>
+            {% endif %}
+                <form method="POST">
+                    <input type="hidden" name="title" value="{{ book['title'] }}">
+                    <input type="hidden" name="author" value="{{ book['author'] }}">
+                    <button type="submit" name='button_submit' class='button check-mark' value='update'>
+                    <button type="submit" name='button_submit' class='button red cross' value='delete'>
+                </form>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
     <form method="POST" id='search-book'>
     <h2>Search for a book</h2>
