@@ -45,6 +45,7 @@ h1 {
 #search-book {
     float: right;
     padding: 20px;
+    width: 540px;
     margin: 5px;
     border-radius: 8px;
     border-width: 2px;
@@ -55,14 +56,8 @@ h1 {
 }
 
 #header-search {
-    position: fixed;
     margin-bottom: 50px;
     width: 50px;
-}
-
-#header-search-blank {
-    height: 50px;
-    display: block;
 }
 
 #right-menu {
