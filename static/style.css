@@ -180,15 +180,6 @@ li.single-book {
     overflow: hidden;
 }
 
-#is-read-label {
-    text-align: center;
-    width: 70px;
-    padding: 0px 0px 0px 2px;
-    margin-right: 4px;
-    font-style: italic;
-    float: right;
-}
-
 ul {
     padding: 0;
 }
