@@ -52,7 +52,7 @@ def search_book():
     if request.method == 'POST':
         title = request.form.get('title')
         author = request.form.get('author')
-        
+
         # TODO fix, search is blank after mark/delete
         if request.form['button_submit'] == 'delete':
             database.remove_book(title, author)
