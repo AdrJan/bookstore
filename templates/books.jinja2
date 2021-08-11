@@ -5,12 +5,7 @@
         <ul>
         <h2>All books</h2>
         <hr>
-        {% if books|length > 0 %}
-        <div id='book-row'>
-            <label id="is-read-label">Remove</label>
-            <label id="is-read-label">Mark as read</label>
-        </div>
-        {% else %}
+        {% if books|length == 0 %}
             There are no books, add one!
         {% endif %}
         {% for book in books %}
