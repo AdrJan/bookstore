@@ -12,4 +12,7 @@ _Application for keeping info about your books._
 
 ## Configuration
 
-* Number of displayed books on a page is kept in configuration file.
+Things kept in configuration file:
+
+* Number of displayed books
+* Name of database file
