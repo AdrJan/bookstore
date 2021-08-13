@@ -1,11 +1,17 @@
 from typing import Dict, List, Union
 from utils.db_connection import DatabaseConnection
+from configparser import ConfigParser
 
 
-DATABASE_FILE = 'data.db'
+config = ConfigParser()
+config.read('configuration/config.ini')
+
+DATABASE_FILE = config.get('database', 'DATABASE_FILE')
 
 
 def create_database_table() -> None:
+    """ Creates table if it doesn't exist.
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
@@ -18,7 +24,7 @@ def add_book(title: str, author: str) -> bool:
 
     :param title: title of the book
     :param author: author of the book
-    :return: True if succesfully added.
+    :return: True if succesfully added
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
@@ -36,7 +42,7 @@ def add_book(title: str, author: str) -> bool:
 def remove_book(title: str, author: str) -> bool:
     """ Removes book from collection.
 
-    :return: True if succesfully removed.
+    :return: True if succesfully removed
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
@@ -48,12 +54,17 @@ def remove_book(title: str, author: str) -> bool:
 
 
 def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int]]]:
+    """ Get filtered books from collection.
+
+    :param title: title filter for searched book
+    :param author: author filter for searched book
+    :return collection of filtered books
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM books WHERE title LIKE ? AND author LIKE ?",
                        ('%'+title+'%', '%'+author+'%'))
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
@@ -61,20 +72,16 @@ def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int
 
 
 def toggle_read(title: str, author: str) -> bool:
-    """ Removes book from collection.
+    """ Mark specific book as read.
 
-    :return: True if succesfully marked book as read.
+    :return: True if succesfully marked book as read
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
         cursor.execute(
             'SELECT is_read FROM books WHERE title=? AND author=?', (title, author))
-
-        # temp = cursor.fetchone()[0]
-
         is_read = 0 if cursor.fetchone()[0] else 1
-
         cursor.execute(
             'UPDATE books SET is_read=? WHERE title=? AND author=?', (is_read, title, author))
 
@@ -82,11 +89,14 @@ def toggle_read(title: str, author: str) -> bool:
 
 
 def get_books() -> List[Dict[str, Union[str, int]]]:
+    """ Get all books from collection.
+
+    :return collection of all books
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
         cursor.execute('SELECT * FROM books')
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
@@ -94,11 +104,16 @@ def get_books() -> List[Dict[str, Union[str, int]]]:
 
 
 def get_sliced_books(offset, limit) -> List[Dict[str, Union[str, int]]]:
+    """ Get sliced part of books from collection.
+
+    :param offset: offset from which books are returned
+    :param limit: number of returned books
+    :return part of book collection
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
         cursor.execute('SELECT * FROM books LIMIT ? OFFSET ?', (limit, offset))
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
