@@ -57,7 +57,6 @@ def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int
 
         cursor.execute("SELECT * FROM books WHERE title LIKE ? AND author LIKE ?",
                        ('%'+title+'%', '%'+author+'%'))
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
