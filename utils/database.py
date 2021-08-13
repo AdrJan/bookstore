@@ -1,8 +1,12 @@
 from typing import Dict, List, Union
 from utils.db_connection import DatabaseConnection
+from configparser import ConfigParser
 
 
-DATABASE_FILE = 'data.db'
+config = ConfigParser()
+config.read('configuration/config.ini')
+
+DATABASE_FILE = config.get('database', 'DATABASE_FILE')
 
 
 def create_database_table() -> None:
@@ -70,11 +74,7 @@ def toggle_read(title: str, author: str) -> bool:
 
         cursor.execute(
             'SELECT is_read FROM books WHERE title=? AND author=?', (title, author))
-
-        # temp = cursor.fetchone()[0]
-
         is_read = 0 if cursor.fetchone()[0] else 1
-
         cursor.execute(
             'UPDATE books SET is_read=? WHERE title=? AND author=?', (is_read, title, author))
 
@@ -86,7 +86,6 @@ def get_books() -> List[Dict[str, Union[str, int]]]:
         cursor = connection.cursor()
 
         cursor.execute('SELECT * FROM books')
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
@@ -98,7 +97,6 @@ def get_sliced_books(offset, limit) -> List[Dict[str, Union[str, int]]]:
         cursor = connection.cursor()
 
         cursor.execute('SELECT * FROM books LIMIT ? OFFSET ?', (limit, offset))
-
         books = [{'title': row[0], 'author': row[1], 'is_read': row[2]}
                  for row in cursor.fetchall()]
 
