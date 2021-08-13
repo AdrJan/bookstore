@@ -10,6 +10,8 @@ DATABASE_FILE = config.get('database', 'DATABASE_FILE')
 
 
 def create_database_table() -> None:
+    """ Creates table if it doesn't exist.
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
@@ -22,7 +24,7 @@ def add_book(title: str, author: str) -> bool:
 
     :param title: title of the book
     :param author: author of the book
-    :return: True if succesfully added.
+    :return: True if succesfully added
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
@@ -40,7 +42,7 @@ def add_book(title: str, author: str) -> bool:
 def remove_book(title: str, author: str) -> bool:
     """ Removes book from collection.
 
-    :return: True if succesfully removed.
+    :return: True if succesfully removed
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
@@ -52,6 +54,12 @@ def remove_book(title: str, author: str) -> bool:
 
 
 def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int]]]:
+    """ Get filtered books from collection.
+
+    :param title: title filter for searched book
+    :param author: author filter for searched book
+    :return collection of filtered books
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
@@ -64,9 +72,9 @@ def get_filtered_books(title: str, author: str) -> List[Dict[str, Union[str, int
 
 
 def toggle_read(title: str, author: str) -> bool:
-    """ Removes book from collection.
+    """ Mark specific book as read.
 
-    :return: True if succesfully marked book as read.
+    :return: True if succesfully marked book as read
     """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
@@ -81,6 +89,10 @@ def toggle_read(title: str, author: str) -> bool:
 
 
 def get_books() -> List[Dict[str, Union[str, int]]]:
+    """ Get all books from collection.
+
+    :return collection of all books
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
@@ -92,6 +104,12 @@ def get_books() -> List[Dict[str, Union[str, int]]]:
 
 
 def get_sliced_books(offset, limit) -> List[Dict[str, Union[str, int]]]:
+    """ Get sliced part of books from collection.
+
+    :param offset: offset from which books are returned
+    :param limit: number of returned books
+    :return part of book collection
+    """
     with DatabaseConnection(DATABASE_FILE) as connection:
         cursor = connection.cursor()
 
