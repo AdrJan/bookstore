@@ -6,7 +6,6 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('configuration/config.ini')
 
-
 app = Flask(__name__)
 
 
@@ -46,20 +45,27 @@ def add_book():
     return render_template('add_book.jinja2')
 
 
+cached_title = ''
+cached_author = ''
+
+
 @app.route('/search_book', methods=['POST', 'GET'])
 def search_book():
     books = []
+    global cached_title
+    global cached_author
     if request.method == 'POST':
         title = request.form.get('title')
         author = request.form.get('author')
 
-        # TODO fix, search is blank after mark/delete
         if request.form['button_submit'] == 'delete':
             database.remove_book(title, author)
         elif request.form['button_submit'] == 'update':
             database.toggle_read(title, author)
         else:
-            books = database.get_filtered_books(title, author)
+            cached_title = title
+            cached_author = author
+        books = database.get_filtered_books(cached_title, cached_author)
 
     return render_template('search_book.jinja2', books=books)
 
