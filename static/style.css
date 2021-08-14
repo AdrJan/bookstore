@@ -62,7 +62,7 @@ h1 {
     width: 50px;
 }
 
-#right-menu {
+#menu {
     float: left;
     width: 150px;
     margin: 5px;
@@ -72,6 +72,7 @@ h1 {
     border-color: black;
     border-style: solid;
     background-color: lightgray;
+    text-align: center;
 }
 
 #section-books-ul {
@@ -154,7 +155,7 @@ a {
 }
 
 a:hover {
-    margin-left: 5px;
+    font-weight: bold;
 }
 
 li.single-book {
