@@ -10,6 +10,12 @@ _Application for keeping info about your books._
 
 * User can find a book using book title, or author.
 
+## Technologies
+
+* Python 3.9.1
+* Jinja
+* Html, CSS
+
 ## Configuration
 
 Things kept in configuration file:
