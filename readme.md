@@ -20,11 +20,11 @@ _Application for keeping info about your books._
 
 In project directory type in terminal:
 
-'''
+```
 $ pipenv shell
 $ pipenv run python app.py
 
-'''
+```
 
 Application should be running on your localhost: http://127.0.0.1:5000/
 
