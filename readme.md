@@ -18,23 +18,44 @@ _Application for keeping info about your books._
 
 ## Setup
 
-In project directory type in terminal:
+First of all make sure you have installed pipenv:
+
+```
+$ pip install pipenv
+```
+
+Then in project directory type in terminal:
 
 ```
 $ pipenv shell
 $ pipenv run python app.py
 ```
 
-Application should be running on your localhost: http://127.0.0.1:5000/
+Application should be running in virtual env on your localhost: http://127.0.0.1:5000/
 
 ## Screenshots
 
-![obraz](https://user-images.githubusercontent.com/23117274/129477569-e8e0d90a-0f6d-4ebe-adf8-cbe5674a2975.png)
+![obraz](https://user-images.githubusercontent.com/23117274/129477695-5b40ffa9-d53f-4a07-916a-5d92c854a3a7.png)
 
+_pic.1 Search book page_
 
+![obraz](https://user-images.githubusercontent.com/23117274/129477733-dd70f90f-58b6-4c81-bda6-5eca1ebded65.png)
+
+_pic.2 List books page_
 ## Configuration
 
-Things kept in configuration file:
+Configuration file is placed in configuration folder:
 
-* Number of displayed books
-* Name of database file
+```
+[pages]
+BOOKS_PER_PAGE = 2
+
+[database]
+DATABASE_FILE = data.db
+```
+_<p align="right">config.ini</p>_
+
+where:
+
+* BOOKS_PER_AGE -  Number of displayed books
+* DATABASE_FILE -  Name of database file
