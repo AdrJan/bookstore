@@ -29,6 +29,8 @@ Application should be running on your localhost: http://127.0.0.1:5000/
 
 ## Screenshots
 
+![obraz](https://user-images.githubusercontent.com/23117274/129477569-e8e0d90a-0f6d-4ebe-adf8-cbe5674a2975.png)
+
 
 ## Configuration
 
