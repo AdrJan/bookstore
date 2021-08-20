@@ -8,7 +8,7 @@ _Application for keeping info about your books._
 
 * User can list all books in his collections, so he can see what books he already have.
 
-* User can find a book using book title, or author.
+* User can find a book by book title, or author.
 
 ## Technologies
 
@@ -42,6 +42,7 @@ _pic.1 Search book page_
 ![obraz](https://user-images.githubusercontent.com/23117274/129477733-dd70f90f-58b6-4c81-bda6-5eca1ebded65.png)
 
 _pic.2 List books page_
+
 ## Configuration
 
 Configuration file is placed in configuration folder:
